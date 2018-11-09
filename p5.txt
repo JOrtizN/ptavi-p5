@@ -377,6 +377,7 @@ buffer de jitter, la conversación puede no tener la calidad necesaria.
 
 22. Filtra por los paquetes SIP de la captura y guarda únicamente los
 paquetes SIP como p5.pcapng. Abre el fichero guardado para cerciorarte de que lo has hecho bien. Deberás añadirlo al repositorio.
+
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
 [Al terminar la práctica, realiza un push para sincronizar tu repositorio GitHub]
 
