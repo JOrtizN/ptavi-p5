@@ -139,7 +139,7 @@ SIP?
 
 * ¿Qué método SIP utiliza el UA para registrarse?
 
-	- REGISTER SIP/2.0
+	- REGISTER
 
 * Además de REGISTER, ¿podrı́as decir qué instrucciones SIP entiende el UA?
 
@@ -151,7 +151,7 @@ SIP?
 
 * ¿Se registra con éxito en el primer intento?
 
-	-No, el servidor sip contesta con un mensaje 401 porque esa dirección no esta 		autorizada.
+	-No, el servidor sip contesta con un mensaje 401 porque esa dirección no esta 		autorizada, al no mandar la autentificacion.
 
 * ¿Cómo sabemos si el registro se ha realizado correctamente o no?
 
@@ -161,7 +161,7 @@ SIP?
 segundo de registro? (fı́jate en el tamaño de los paquetes y mira
 a qué se debe el cambio)
 
-	-En el primer intento no aparece la autorización mientras que en el segundo si 		aparece la cabecera authorization, por eso que tenga mas longitud este paquete, 	712. Length primer paquete = 523.
+	-En el primer intento no aparece la autorización mientras que en el segundo si 		aparece la cabecera authorization que le permite autenticarse y así darse de alta, 	por eso que tenga mas longitud este paquete, 712. Length primer paquete = 523.
 
 * ¿Cuánto es el valor del tiempo de expiración de la sesión? Indica
 las unidades.
@@ -221,40 +221,104 @@ captura es en destino)?
 
 12. Vamos a ver más a fondo el intercambio RTP. En Telephony hay una
 opción RTP. Empecemos mirando los flujos RTP.
+
 * ¿Cuántos flujos hay? ¿por qué?
+
+	-Hay dos flujos, uno de audio(payload = g711a) y otro de video(payload = h.261)
+
 * ¿Cuántos paquetes se pierden?
+
+	- se pierden 0 paquetes, lo que ,como es normal, representa el 0%.
+
 * ¿Cuál es el valor máximo del delta? ¿Y qué es lo que significa el
 valor de delta?
+
+	- Max Delta(ms) = 1290.444(audio) y 1290.479 (video). Tiempo entre paquetes.
+
 * ¿Cuáles son los valores de jitter (medio y máximo)? ¿Qué
 quiere decir eso? ¿Crees que estamos ante una conversación de
 calidad?
 
+	- Max Jitter = 119.635 (audio) y 183.096 (video)
+	  Mean Jitter = 42.500 (audio) y 153.240 (video)
+	  Jitter es la variación del retardo.
+	Si estamos ante una conversación de calidad porque no se han perdido paquetes, 		lo que implica pérdidas de menos del 1%.
+
+
 13. Elige un paquete RTP de audio. Analiza el flujo de audio en Telephony
 -> RTP -> Stream Analysis.
+
 * ¿Cuánto valen el delta y el jitter para el primer paquete que
 ha llegado?
+
+	- 0 en ambos casos porque al ser el primero no tenemos paquetes con quien 		compararlo.
+
 * ¿Podemos saber si éste es el primer paquete que nos han enviado?
+
+	- Si, porque tiene el menor numero de secuencia.
+
 * Los valores de jitter son menores de 10ms hasta un paquete
 dado. ¿Cuál?
+
+	- último paquete con jitter menor que 10 —> 246(seq=23420). 
+	El paquete con número de secuencia 23421 tiene un jitter de 38.82 ms.
+	Luego como mucho baja a 20,25 en el paquete 724.
+
 * ¿A qué se debe el cambio tan brusco del jitter?
+
+	- A que seguramente la latencia fuera mayor por algún problema en la red.
+
 * ¿Es comparable el cambio en el valor de jitter con el del delta?
 ¿Cual es más grande?
+
+	-el Jitter cambia en relación a las variaciones del delta, por lo que si tienen 	relación. Delta es mayor.
+
 
 14. En Telephony selecciona el menú VoIP calls. Verás que se lista la
 llamada de voz IP capturada en una ventana emergente. Selecciona
 esa llamada y pulsa el botón Graph.
+
 * ¿Cuánto dura la conversación?
+
+	- 24 segundos (desde 14.426793 hasta 39.229683)
+
 * ¿Cuáles son sus SSRC? ¿Por qué hay varios SSRCs? ¿Hay CSRCs?
 
+	- Para audio SSRC = 0xbf4afd37 y para video 0x43306582.
+	Hay 2 SSRC porque hay dos flujos. CSRC = 0, no hay.
+
+
 15. Identifica la trama donde se finaliza la conversación.
+
 * ¿Qué método SIP se utiliza?
+
+	- Método sip: BYE 
+
 * ¿En qué trama(s)?
+
+	- Se manda 4 veces: en las tramas 924, 925, 927 y 933.
+
 * ¿Por qué crees que se envı́a varias veces?
 
+	- Para asegurarse de que no se pierde la petición BYE y no se queda la conversación abierta. Ya que estamos utilizando el protocolo UDP.
+
+
 16. Finalmente, se cierra la aplicación de VozIP.
+
 * ¿Por qué aparece una instrucción SIP del tipo REGISTER?
+
+	- Porque estos mensajes REGISTER vienen con la cabecera espires a 0, lo cual implica que se está dando de baja ese usuario.
+
 * ¿En qué trama sucede esto?
+
+	- En la trama 950 se da un intento fallido y en la 952 consigue darse de baja.
+
 * ¿En qué se diferencia con la instrucción que se utilizó con anterioridad (al principio de la sesión)?
+
+	- Igual que cuando se registro le había faltado la cabecera Authorization.
+	En el segundo intento ya se autentica.
+
+
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
 
 Captura de una sesión SIP
