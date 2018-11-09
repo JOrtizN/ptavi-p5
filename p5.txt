@@ -148,32 +148,75 @@ SIP?
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
 
 9. Fijémonos en las tramas siguientes a la número 46:
+
 * ¿Se registra con éxito en el primer intento?
+
+	-No, el servidor sip contesta con un mensaje 401 porque esa dirección no esta 		autorizada.
+
 * ¿Cómo sabemos si el registro se ha realizado correctamente o no?
+
+	- Si el servidor contesta con un mensaje 200 OK como en el mensaje 54 tras el 		segundo intento de register.
+
 * ¿Podrı́as identificar las diferencias entre el primer intento y el
 segundo de registro? (fı́jate en el tamaño de los paquetes y mira
 a qué se debe el cambio)
+
+	-En el primer intento no aparece la autorización mientras que en el segundo si 		aparece la cabecera authorization, por eso que tenga mas longitud este paquete, 	712. Length primer paquete = 523.
+
 * ¿Cuánto es el valor del tiempo de expiración de la sesión? Indica
 las unidades.
+
+	- 3600 segundos
+
 
 10. Una vez registrados, podemos efectuar una llamada. Vamos a probar
 con el servicio de eco de Ekiga que nos permite comprobar si nos
 hemos conectado correctamente. El servicio de eco tiene la dirección
 sip:500@ekiga.net. Veamos el INVITE de cerca.
+
 * ¿Puede verse el nombre del que efectúa la llamada, ası́ como su
 dirección SIP?
+
+	- si, en el paquete 84 vemos el nombre en From: “Gregorio Robles” y
+	SIP from address: sip:grex@ekiga.net
+
 * ¿Qué es lo que contiene el cuerpo de la trama? ¿En qué formato/protocolo está?
+
+	- El cuerpo contiene la descripción de la sesión con v,o,c,t, 1 mensajes de audio 	son 8 atributos y otro mensaje de video con un atributo. SIP/SDP.
+
 * ¿Tiene éxito el primer intento? ¿Cómo lo sabes?
+
+	- No, porque recibe un mensaje 407 que nos avisa de que el proxy no esta 		autorizado.
+
 * ¿En qué se diferencia el segundo INVITE más abajo del primero?
 ¿A qué crees que se debe esto?
 
+	- En que en el segundo mensaje ya aparece la autorización del proxy, esto hace que  	la longitud sea 1181 en el segundo paquete y 982 en el primero.
+
+
 11. Una vez conectado, estudia el intercambio de tramas.
+
 * ¿Qué protocolo(s) se utiliza(n)? ¿Para qué sirven estos protocolos?
+
+	- RTP para audio y video, los de video aparecen codificados en H.261.
+
 * ¿Cuál es el tamaño de paquete de los mismos?
+
+	- El tamaño de los paquetes de audio es en todos de 214 porque se toman muestras 	de esa longitud, mientras que en los paquetes de video la longitud varía.
+
 * ¿Se utilizan bits de padding?
+
+	- No, hay un apartado que lo indica expresamente.
+
 * ¿Cuál es la periodicidad de los paquetes (en origen; nota que la
 captura es en destino)?
+
+	- sólo he encontrado el Timestamp que indicaría un periodo de 160 segundos. PREGUNTAR**
+
 * ¿Cuántos bits/segundo se envı́an?
+
+	- *** no lo se, preguntar.
+
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
 
 12. Vamos a ver más a fondo el intercambio RTP. En Telephony hay una
