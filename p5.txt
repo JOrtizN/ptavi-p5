@@ -211,11 +211,11 @@ dirección SIP?
 * ¿Cuál es la periodicidad de los paquetes (en origen; nota que la
 captura es en destino)?
 
-	- sólo he encontrado el Timestamp que indicaría un periodo de 160 segundos. PREGUNTAR**
+	- El protocolo G.711 envia con un bitrate constante, cada paquete son 160bytes de payload (vemos que coincide con timestamp lo que quiere decir que nos lo están expresando en bytes en vez de en segundos). De ahí sacamos que manda 50 paquetes por segundos lo que nos da una periodicidad de 0.2 segundos.
 
 * ¿Cuántos bits/segundo se envı́an?
 
-	- *** no lo se, preguntar.
+	- El protocolo G.711 tiene un bit rate constante de 64kbits/s.
 
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
 
@@ -242,7 +242,7 @@ calidad?
 	- Max Jitter = 119.635 (audio) y 183.096 (video)
 	  Mean Jitter = 42.500 (audio) y 153.240 (video)
 	  Jitter es la variación del retardo.
-	Estamos ante una conversacion de baja calidad porque el jitter medio pasa de los 30ms 		y en el video lo supera casi en 3 veces.
+	Estamos ante una conversacion de baja calidad porque al mirar la gráfica vemos una periodicidad muy variable cuando debería ser lo mas constante posible.
 
 
 13. Elige un paquete RTP de audio. Analiza el flujo de audio en Telephony
@@ -328,19 +328,20 @@ Captura de una sesión SIP
 	_OK: Registrada.
 
 18.Lanza Ekiga, y configúralo con los datos de la cuenta que te acabas de crear. Para ello, puedes ir al menú “Editar” y seleccionar “Cuentas”. Tendrás que rellenar los campos de manera similar a lo que se puede ver en la imagen a continuación (recuerda poner tu nombre de usuario en lugar de “grex”). Comprueba que estás conectado (En la barra al final de la ventana podrás ver “Connected”). Al terminar, cierra completamente Ekiga.
-	_
+	_OK
 
 19. Captura una sesión SIP de una conversación con el número SIP sip:music@sip.iptel.org.
 Recuerda que has de comenzar a capturar tramas antes de arrancar
 Ekiga para ver todo el proceso3 .
-	_
+	_OK
 
 20. Observa las diferencias en el inicio de la conversación entre el entorno
 del laboratorio y el del ejercicio anterior4 :
 
 * ¿Se utilizan DNS y STUN? ¿Por qué?
 
-	- No, porque en el laboratorio nuestras maquinas ya tienen ip publica.
+	- No usa stun, porque en el laboratorio nuestras maquinas ya tienen ip publica.
+	DNS si pero aparece como MDNS, porque está en un servicio multicast.
 
 * ¿Son diferentes el registro y la descripción de la sesión?
 
@@ -355,7 +356,7 @@ del laboratorio y el del ejercicio anterior4 :
 
 * ¿Cuál es su periodicidad?
 
-	- *** Su timestamp nos diría que es 320.
+	- En la grafica de paquetes rtp aparece una periodicidad de 100 paquetes por segundo(por la gráfica vemos que estamos en una conexion de buena calidad), pero como tenemos dos flujos tenemos que ver la aportacion de cada flujo en este periodo, asi que vamos a RTP streams y vemos que un flujo tiene 1304 y el otro 1309 por lo que es prácticamente la mitad. Entonces será 50paquetes por segundo que da una periodicidad de 0.2 segundos.
 
 * ¿Cuánto es el valor máximo del delta y los valores medios y
 máximo del jitter?
@@ -374,7 +375,7 @@ buffer de jitter, la conversación puede no tener la calidad necesaria.
 
 * ¿Sabrı́as decir qué tipo de servicio ofrece sip:music@iptel.org?
 
-	- ****
+	- Nos ofrece un servicio de audio. En concreto de música.
 
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
 
