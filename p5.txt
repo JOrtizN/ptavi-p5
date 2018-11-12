@@ -242,7 +242,7 @@ calidad?
 	- Max Jitter = 119.635 (audio) y 183.096 (video)
 	  Mean Jitter = 42.500 (audio) y 153.240 (video)
 	  Jitter es la variación del retardo.
-	Si estamos ante una conversación de calidad porque no se han perdido paquetes, 		lo que implica pérdidas de menos del 1%.
+	Estamos ante una conversacion de baja calidad porque el jitter medio pasa de los 30ms 		y en el video lo supera casi en 3 veces.
 
 
 13. Elige un paquete RTP de audio. Analiza el flujo de audio en Telephony
@@ -340,27 +340,31 @@ del laboratorio y el del ejercicio anterior4 :
 
 * ¿Se utilizan DNS y STUN? ¿Por qué?
 
-	- **Debería.DNS para saber la dirección de ekiga y stun para saber su dirección pública.
+	- No, porque en el laboratorio nuestras maquinas ya tienen ip publica.
 
 * ¿Son diferentes el registro y la descripción de la sesión?
 
-	- **Debería.La descripción de la sesión se hace por el método INVITE de SIP, 		mientras que el registro por el método REGISTER.
+	- La descripción de la sesión se hace por el método INVITE de SIP, 		mientras que el registro por el método REGISTER.
 
 
 21. Identifica las diferencias existentes entre esta conversación y la conversación anterior:
 
 * ¿Cuántos flujos tenemos?
 
-	-
+	- 2 flujos de audio. RTP
 
 * ¿Cuál es su periodicidad?
 
-	-
+	- *** Su timestamp nos diría que es 320.
 
 * ¿Cuánto es el valor máximo del delta y los valores medios y
 máximo del jitter?
 
-	-
+	- Para el primer flujo Max Delta (SSRC = 0x704f3fc1) = 27.309.
+	  Para el segundo flujo Max Delta (SSRC = 0xd7f8f1fb) = 37.083.
+	Jitter:
+	Flujo1 -> MAX = 1.541 / MEAN = 0.556
+	Flujo1 -> MAX = 13.537 / MEAN = 12.599
 
 * ¿Podrı́as reproducir la conversación desde Wireshark? ¿Cómo?
 Comprueba que poniendo un valor demasiado pequeño para el
