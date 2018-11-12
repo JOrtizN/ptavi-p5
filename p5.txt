@@ -370,11 +370,11 @@ máximo del jitter?
 Comprueba que poniendo un valor demasiado pequeño para el
 buffer de jitter, la conversación puede no tener la calidad necesaria.
 
-	-
+	- Si se puede, desde VoIP Calls/RTP player. Pero a la hora de darle al play me salta un error -> "RTP stream is empty or codec is unsupported, así que no puedo verlo.
 
 * ¿Sabrı́as decir qué tipo de servicio ofrece sip:music@iptel.org?
 
-	-
+	- ****
 
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
 
