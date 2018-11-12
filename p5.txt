@@ -81,7 +81,7 @@ qué segundos tienen lugar esos envı́os?
 * ¿Cuál es la dirección IP del servidor de nombres del ordenador
 que ha lanzado Ekiga?
 
-	- 80.58.61.250
+	- http://ekiga.net/ip/
 
 * ¿Qué dirección IP (de ekiga.net) devuelve el servicio de nombres?
 
